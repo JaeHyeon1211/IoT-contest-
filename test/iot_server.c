@@ -200,13 +200,13 @@ int main(int argc, char *argv[])
            						 error_handling("read file open() error!");
 						//	if(tfd >0)
 						//	{
-				        		while((tlog_len = read(tfd, tlog_msg,BUF_SIZE))!= 0)
+				        		while((read(tfd, tlog_msg,BUF_SIZE))!= 0)
         						{
-									printf("read : %d\n",tlog_len);
+								//	printf("read : %d\n",tlog_len);
 
 //				            		if(tlog_len ==0)
 //                						break;
-				            		write(clnt_sock,tlog_msg, tlog_len);
+				            		write(clnt_sock,tlog_msg, BUF_SIZE);
 
 									clock_t start = clock();
 									while(clock()-start<100000);
