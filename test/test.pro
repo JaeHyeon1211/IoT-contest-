@@ -1,4 +1,4 @@
-QT       += core gui network charts sql
+QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,22 +21,28 @@ SOURCES += \
     qfilesocket.cpp \
     socketclient.cpp \
     tab1socketclient.cpp \
-    tab2database.cpp
+    tab2database.cpp \
+    tab4onoff.cpp
 
 HEADERS += \
     mainwidget.h \
     qfilesocket.h \
     socketclient.h \
     tab1socketclient.h \
-    tab2database.h
+    tab2database.h \
+    tab4onoff.h
 
 FORMS += \
     mainwidget.ui \
     qfilesocket.ui \
     tab1socketclient.ui \
-    tab2database.ui
+    tab2database.ui \
+    tab4onoff.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    IotQtClient.qrc
