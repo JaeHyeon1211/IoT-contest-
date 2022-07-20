@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
 						pthread_create(t_id+i, NULL, clnt_connection, (void *)(client_info + i));
 						sprintf(msg,"[%s] New connected! (ip:%s,fd:%d,sockcnt:%d)\n",pArray[0],inet_ntoa(clnt_adr.sin_addr),clnt_sock,clnt_cnt);
 						log_file(msg);
-						write(clnt_sock, msg,strlen(msg));
+//						write(clnt_sock, msg,strlen(msg));
 
 						pthread_detach(t_id[i]);
 						break;
@@ -301,11 +301,16 @@ void * clnt_connection(void *arg)
 		}
 		*/
 		sprintf(strBuff,"msg : [%s->%s] %s",msg_info.from,msg_info.to,pArray[1]);
+	//int i = 0;
+	if((strcmp(pArray[1]," 1\n")==0) ||(strcmp(pArray[1]," 0\n")==0))
+	{
 		if(t->tm_sec <10)
 			sprintf(totallog,"%d.%d.%d %d:%d:0%d [%s->%s] %s",t->tm_year +1900, t->tm_mon +1, t->tm_mday,     t->tm_hour, t->tm_min, t->tm_sec,  msg_info.from,msg_info.to,pArray[1]);
 		else
 			sprintf(totallog,"%d.%d.%d %d:%d:%d [%s->%s] %s",t->tm_year +1900, t->tm_mon +1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec,  msg_info.from,msg_info.to,pArray[1]);
+	
 		write(wfd, totallog ,strlen(totallog)); 
+	}
 
 
 		log_file(strBuff);
