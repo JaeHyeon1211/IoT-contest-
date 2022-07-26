@@ -1,0 +1,14 @@
+release/main.o
+release/mainwidget.o
+release/qfilesocket.o
+release/socketclient.o
+release/tab1socketclient.o
+release/tab2database.o
+release/tab4onoff.o
+release/qrc_IotQtClient.o
+release/moc_mainwidget.o
+release/moc_qfilesocket.o
+release/moc_socketclient.o
+release/moc_tab1socketclient.o
+release/moc_tab2database.o
+release/moc_tab4onoff.o

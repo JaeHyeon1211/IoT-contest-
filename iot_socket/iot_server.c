@@ -1,5 +1,3 @@
-/* author : KSH */
-/* 서울기술 교육센터 IoT */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -60,9 +58,6 @@ int main(int argc, char *argv[])
 	char *pToken;
 	char *pArray[ARR_CNT]={0};
 	char msg[BUF_SIZE]; // msg[100]
-	char tlog_msg[BUF_SIZE]; // tlog_msg[100]
-    int tfd;
-    int tlog_len = 0;
 
 	/*	CLIENT_INFO client_info[MAX_CLNT] = {{0,-1,"","1","PASSWD"}, \
 		{0,-1,"","2","PASSWD"},  {0,-1,"","3","PASSWD"}, \
@@ -193,32 +188,10 @@ int main(int argc, char *argv[])
 						clnt_cnt++;
 						pthread_mutex_unlock(&mutx);
 
-						if(!strcmp(pArray[0],"admin")){
-							printf("dd");
-							tfd = open("Totallog.txt", O_RDONLY | O_CREAT, 0644);
-				       		if(tfd < 0)
-           						 error_handling("read file open() error!");
-						//	if(tfd >0)
-						//	{
-				        		while((tlog_len = read(tfd, tlog_msg,BUF_SIZE))!= 0)
-        						{
-									printf("read : %d\n",tlog_len);
-
-//				            		if(tlog_len ==0)
-//                						break;
-				            		write(clnt_sock,tlog_msg, tlog_len);
-
-									clock_t start = clock();
-									while(clock()-start<100000);
-       							 }
-								
-						//	}
-						}
-						//close(tfd);
 						pthread_create(t_id+i, NULL, clnt_connection, (void *)(client_info + i));
 						sprintf(msg,"[%s] New connected! (ip:%s,fd:%d,sockcnt:%d)\n",pArray[0],inet_ntoa(clnt_adr.sin_addr),clnt_sock,clnt_cnt);
 						log_file(msg);
-//						write(clnt_sock, msg,strlen(msg));
+						write(clnt_sock, msg,strlen(msg));
 
 						pthread_detach(t_id[i]);
 						break;
@@ -236,7 +209,6 @@ int main(int argc, char *argv[])
 		else 
 			shutdown(clnt_sock,SHUT_WR);
 	}
-	close(tfd);
 	return 0;
 }
 
@@ -251,12 +223,6 @@ void * clnt_connection(void *arg)
 	char *pToken;
 	char *pArray[ARR_CNT]={0};
 	char strBuff[130]={0};
-	char totallog[130] = {0};
-	int wfd;
-	time_t timer;
-	struct tm* t;
-	timer = time(NULL);
-	t = localtime(&timer);
 
 	MSG_INFO msg_info;
 	CLIENT_INFO  * first_client_info;
@@ -291,33 +257,8 @@ void * clnt_connection(void *arg)
 		msg_info.msg = to_msg;
 		msg_info.len = strlen(to_msg);
 
-		wfd = open("Totallog.txt", O_WRONLY | O_CREAT | O_APPEND,0644);
-		if(wfd < 0)
-        	error_handling("write file open() error!");
-		/*
-		if(log_flag ==0){
-			write(wfd,"LOG\n",strlen("LOG\n"));
-			log_flag = 1;
-		}
-		*/
-		sprintf(strBuff,"msg : [%s->%s] %s",msg_info.from,msg_info.to,pArray[1]);
-	//int i = 0;
-	if((strcmp(pArray[1]," 1\n")==0) ||(strcmp(pArray[1]," 0\n")==0))
-	{
-		if(t->tm_sec <10)
-			sprintf(totallog,"%d.%d.%d %d:%d:0%d [%s->%s] %s",t->tm_year +1900, t->tm_mon +1, t->tm_mday,     t->tm_hour, t->tm_min, t->tm_sec,  msg_info.from,msg_info.to,pArray[1]);
-		else
-			sprintf(totallog,"%d.%d.%d %d:%d:%d [%s->%s] %s",t->tm_year +1900, t->tm_mon +1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec,  msg_info.from,msg_info.to,pArray[1]);
-	
-		write(wfd, totallog ,strlen(totallog)); 
-	}
-
-
 		log_file(strBuff);
 		send_msg(&msg_info, first_client_info);
-		
-
-
 	}
 
 	close(client_info->fd);
@@ -330,7 +271,6 @@ void * clnt_connection(void *arg)
 	client_info->fd = -1;
 	pthread_mutex_unlock(&mutx);
 
-	close(wfd);
 	return 0;
 }
 
