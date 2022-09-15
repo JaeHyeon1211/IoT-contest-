@@ -10,8 +10,8 @@ ESP8266WiFiMulti WiFiMulti;
 WiFiClient client;
 
 
-const char * host = "10.10.141.45";
-const uint16_t port = 6000;
+const char * host = "10.10.141.188";
+const uint16_t port = 5000;
 
 int trig = 13;
 int echo = 12;
@@ -137,6 +137,7 @@ void loop() {
         MsgSend();
         init_conn = 1;
         flag = 0;
+        digitalWrite(14, LOW);
         client.stop();
       }
     }
