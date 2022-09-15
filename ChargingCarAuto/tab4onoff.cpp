@@ -14,7 +14,7 @@ Tab4OnOff::Tab4OnOff(QWidget *parent) :
     m_img[0].load(":/IotQtClient/img/areaemp.png");
     m_img[1].load(":/IotQtClient/img/areacar.png");
     m_img[2].load(":/IotQtClient/img/plug.png");
-    m_img[3].load(":/IotQtClient/img/plug.png.png");
+    m_img[3].load(":/IotQtClient/img/plugout.png");
 }
 
 Tab4OnOff::~Tab4OnOff()

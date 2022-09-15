@@ -10,7 +10,6 @@
 #define UI_TAB4ONOFF_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -101,10 +100,6 @@ public:
         font1.setStyleStrategy(QFont::NoAntialias);
         pPBLamp1->setFont(font1);
         pPBLamp1->setLayoutDirection(Qt::LeftToRight);
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/IotQtClient/img/plugout.png"), QSize(), QIcon::Normal, QIcon::Off);
-        icon.addFile(QString::fromUtf8(":/IotQtClient/img/plug.png"), QSize(), QIcon::Normal, QIcon::On);
-        pPBLamp1->setIcon(icon);
         pPBLamp1->setIconSize(QSize(60, 60));
         pPBLamp1->setCheckable(true);
         pPBLamp1->setAutoDefault(false);
@@ -120,7 +115,7 @@ public:
 
         progressBar = new QProgressBar(Tab4OnOff);
         progressBar->setObjectName(QString::fromUtf8("progressBar"));
-        progressBar->setValue(24);
+        progressBar->setValue(0);
 
         horizontalLayout->addWidget(progressBar);
 
@@ -154,7 +149,6 @@ public:
         pPBLamp2->setObjectName(QString::fromUtf8("pPBLamp2"));
         sizePolicy.setHeightForWidth(pPBLamp2->sizePolicy().hasHeightForWidth());
         pPBLamp2->setSizePolicy(sizePolicy);
-        pPBLamp2->setIcon(icon);
         pPBLamp2->setIconSize(QSize(60, 60));
         pPBLamp2->setCheckable(true);
         pPBLamp2->setFlat(true);
@@ -169,7 +163,7 @@ public:
 
         progressBar_2 = new QProgressBar(Tab4OnOff);
         progressBar_2->setObjectName(QString::fromUtf8("progressBar_2"));
-        progressBar_2->setValue(24);
+        progressBar_2->setValue(0);
 
         horizontalLayout_3->addWidget(progressBar_2);
 
